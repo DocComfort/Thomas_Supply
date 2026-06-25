@@ -27,7 +27,8 @@ export default function Footer() {
             <p style={{ margin: "0 0 8px" }}><Link href="/locations">Locations</Link></p>
             <p style={{ margin: "0 0 8px" }}><Link href="/brands">Brands</Link></p>
             <p style={{ margin: "0 0 8px" }}><Link href="/contact">Contact</Link></p>
-            <p style={{ margin: 0 }}><a href={dealerPortalUrl}>Dealer Portal</a></p>
+            <p style={{ margin: "0 0 8px" }}><a href={dealerPortalUrl}>Dealer Portal</a></p>
+            <p style={{ margin: 0 }}><Link href="/legal/licenses">Open Source Licenses</Link></p>
           </div>
           <div>
             <h4>Branches</h4>

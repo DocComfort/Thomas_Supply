@@ -131,6 +131,35 @@ details.faq summary::after { content: "+"; float: right; color: var(--blue); fon
 details.faq[open] summary::after { content: "–"; }
 details.faq p { margin: 0 0 18px; color: var(--muted); }
 
+/* Open source licenses */
+.license-meta { color: var(--muted); font-size: .92rem; margin: 4px 0 28px; }
+.license-group summary .license-count {
+  display: inline-block; margin-left: 10px; background: var(--bg-soft, #eef2f7);
+  color: var(--navy); border: 1px solid var(--line); border-radius: 999px;
+  font-size: .78rem; font-weight: 700; padding: 1px 9px; vertical-align: middle;
+}
+.license-pkgs {
+  list-style: none; margin: 4px 0 18px; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px;
+}
+.license-pkgs li {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line);
+}
+.license-pkgs code { color: var(--navy); font-size: .9rem; word-break: break-all; }
+.license-ver { color: var(--muted); font-size: .82rem; flex: none; }
+.license-text {
+  white-space: pre-wrap; word-wrap: break-word; background: var(--bg-soft, #f6f8fb);
+  border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px;
+  font-size: .82rem; line-height: 1.5; color: #33414f; max-height: 360px;
+  overflow: auto; margin: 0 0 14px;
+}
+.license-link { font-size: .9rem; color: var(--muted); margin: 0 0 6px; word-break: break-all; }
+.license-note { margin-top: 30px; color: var(--muted); font-size: .9rem; }
+@media (max-width: 860px) {
+  .license-pkgs { grid-template-columns: 1fr; }
+}
+
 /* CTA band */
 .cta-band { background: var(--navy); color: #fff; text-align: center; }
 .cta-band h2 { color: #fff; }
