@@ -1,0 +1,30 @@
+{
+  "name": "thomas-supply",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace @thomas-supply/web",
+    "dev:portal": "npm run dev --workspace @thomas-supply/web",
+    "dev:marketing": "next dev",
+    "build": "npm run build --workspace @thomas-supply/web",
+    "build:portal": "npm run build --workspace @thomas-supply/web",
+    "build:marketing": "next build",
+    "start": "npm run start --workspace @thomas-supply/web",
+    "lint": "npm run lint --workspace @thomas-supply/web",
+    "typecheck": "npm run typecheck --workspace @thomas-supply/web",
+    "db:generate": "prisma generate --schema packages/db/schema.prisma",
+    "db:push": "prisma db push --schema packages/db/schema.prisma",
+    "db:seed": "node packages/db/prisma/seed.mjs",
+    "logos": "node scripts/run-logos.js"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0"
+  }
+}

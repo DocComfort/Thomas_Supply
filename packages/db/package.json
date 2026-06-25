@@ -1,0 +1,17 @@
+{
+  "name": "@thomas-supply/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "types": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./client": "./client.ts",
+    "./mock": "./mock.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "@thomas-supply/shared": "file:../shared"
+  }
+}

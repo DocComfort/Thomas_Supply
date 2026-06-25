@@ -1,0 +1,13 @@
+<svg width="248" height="48" viewBox="0 0 248 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Thomas Supply">
+  <rect x="0" y="2" width="44" height="44" rx="10" fill="#0b2545"/>
+  <!-- snowflake mark (cooling) -->
+  <g stroke="#f4a300" stroke-width="2.4" stroke-linecap="round">
+    <line x1="22" y1="9" x2="22" y2="39"/>
+    <line x1="9" y1="24" x2="35" y2="24"/>
+    <line x1="12.5" y1="14.5" x2="31.5" y2="33.5"/>
+    <line x1="31.5" y1="14.5" x2="12.5" y2="33.5"/>
+  </g>
+  <circle cx="22" cy="24" r="3" fill="#1b6ca8"/>
+  <text x="56" y="24" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="800" fill="#0b2545" letter-spacing="-0.3">THOMAS <tspan fill="#1b6ca8">SUPPLY</tspan></text>
+  <text x="56" y="39" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#5b6878" letter-spacing="2.2">HVAC PARTS &amp; EQUIPMENT</text>
+</svg>

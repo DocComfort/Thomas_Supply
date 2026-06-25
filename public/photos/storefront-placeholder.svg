@@ -1,0 +1,38 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87ceeb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0f6ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#sky)"/>
+  <!-- Building -->
+  <rect x="100" y="150" width="600" height="300" fill="#8b7355"/>
+  <!-- Roof -->
+  <polygon points="100,150 400,50 700,150" fill="#654321"/>
+  <!-- Doors -->
+  <rect x="200" y="320" width="80" height="130" fill="#4a4a4a"/>
+  <circle cx="275" cy="385" r="5" fill="#d4af37"/>
+  <rect x="520" y="320" width="80" height="130" fill="#4a4a4a"/>
+  <circle cx="595" cy="385" r="5" fill="#d4af37"/>
+  <!-- Windows -->
+  <rect x="150" y="200" width="60" height="60" fill="#87ceeb"/>
+  <line x1="180" y1="200" x2="180" y2="260"/>
+  <line x1="150" y1="230" x2="210" y2="230"/>
+  <rect x="270" y="200" width="60" height="60" fill="#87ceeb"/>
+  <line x1="300" y1="200" x2="300" y2="260"/>
+  <line x1="270" y1="230" x2="330" y2="230"/>
+  <rect x="470" y="200" width="60" height="60" fill="#87ceeb"/>
+  <line x1="500" y1="200" x2="500" y2="260"/>
+  <line x1="470" y1="230" x2="530" y2="230"/>
+  <rect x="590" y="200" width="60" height="60" fill="#87ceeb"/>
+  <line x1="620" y1="200" x2="620" y2="260"/>
+  <line x1="590" y1="230" x2="650" y2="230"/>
+  <!-- Ground -->
+  <rect x="0" y="450" width="800" height="50" fill="#8b8b7a"/>
+  <!-- Sign area -->
+  <rect x="300" y="30" width="200" height="60" fill="#ffffff" stroke="#333" stroke-width="2"/>
+  <text x="400" y="65" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold" fill="#0b2545">THOMAS SUPPLY</text>
+  <!-- Placeholder text -->
+  <text x="400" y="480" text-anchor="middle" font-family="Arial" font-size="14" fill="#aaa">Drop your storefront photo here</text>
+</svg>

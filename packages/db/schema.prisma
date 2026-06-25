@@ -1,0 +1,284 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DealerRole {
+  owner
+  purchaser
+  technician
+  viewer
+}
+
+enum AdminRole {
+  admin
+  sales
+  warehouse
+  accounting
+}
+
+enum OrderRequestStatus {
+  draft
+  submitted
+  sent_to_odoo
+  confirmed
+  rejected
+  failed
+}
+
+enum SyncJobStatus {
+  queued
+  running
+  succeeded
+  failed
+}
+
+enum AuditActorType {
+  dealer_user
+  admin_user
+  system
+}
+
+enum InventoryStatus {
+  in_stock
+  limited_stock
+  out_of_stock
+}
+
+enum CartSessionStatus {
+  active
+  submitted
+  abandoned
+}
+
+model Organization {
+  id            String          @id @default(cuid())
+  name          String
+  slug          String          @unique
+  dealerAccounts DealerAccount[]
+  users         User[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model DealerAccount {
+  id             String                 @id @default(cuid())
+  organizationId String
+  organization   Organization           @relation(fields: [organizationId], references: [id])
+  name           String
+  accountNumber  String                 @unique
+  odooPartnerId  String                 @unique
+  isActive       Boolean                @default(true)
+  allowExactInventory Boolean            @default(false)
+  memberships    DealerUserMembership[]
+  prices         ProductPriceCache[]
+  carts          CartSession[]
+  orderRequests  OrderRequest[]
+  auditLogs      ApiAuditLog[]
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+
+  @@index([organizationId])
+}
+
+model User {
+  id             String                 @id @default(cuid())
+  organizationId String?
+  organization   Organization?          @relation(fields: [organizationId], references: [id])
+  email          String                 @unique
+  name           String
+  adminRole      AdminRole?
+  isActive       Boolean                @default(true)
+  memberships    DealerUserMembership[]
+  carts          CartSession[]
+  orderRequests  OrderRequest[]
+  auditLogs      ApiAuditLog[]          @relation("AuditUser")
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+}
+
+model DealerUserMembership {
+  id              String        @id @default(cuid())
+  dealerAccountId String
+  dealerAccount   DealerAccount @relation(fields: [dealerAccountId], references: [id])
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  role            DealerRole
+  isActive        Boolean       @default(true)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([dealerAccountId, userId])
+  @@index([userId])
+}
+
+model ProductCache {
+  id            String                  @id @default(cuid())
+  sku           String                  @unique
+  odooProductId String                  @unique
+  name          String
+  description   String?
+  brand         String?
+  category      String?
+  uom           String                  @default("ea")
+  isActive      Boolean                 @default(true)
+  inventory     ProductInventoryCache[]
+  prices        ProductPriceCache[]
+  cartItems     CartItem[]
+  orderItems    OrderRequestItem[]
+  lastSyncedAt  DateTime?
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @updatedAt
+
+  @@index([brand])
+  @@index([category])
+  @@index([lastSyncedAt])
+}
+
+model ProductInventoryCache {
+  id             String       @id @default(cuid())
+  productId      String
+  product        ProductCache @relation(fields: [productId], references: [id])
+  locationCode   String
+  locationName   String
+  status         InventoryStatus
+  quantity       Int?
+  allowExactQuantity Boolean  @default(false)
+  lastSyncedAt   DateTime     @default(now())
+
+  @@unique([productId, locationCode])
+  @@index([locationCode, status])
+  @@index([lastSyncedAt])
+}
+
+model ProductPriceCache {
+  id              String        @id @default(cuid())
+  dealerAccountId String
+  dealerAccount   DealerAccount @relation(fields: [dealerAccountId], references: [id])
+  productId       String
+  product         ProductCache  @relation(fields: [productId], references: [id])
+  currency        String        @default("USD")
+  unitPriceCents  Int
+  source          String        @default("odoo")
+  expiresAt       DateTime
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([dealerAccountId, productId])
+  @@index([dealerAccountId, expiresAt])
+  @@index([productId, expiresAt])
+}
+
+model CartSession {
+  id              String        @id @default(cuid())
+  dealerAccountId String
+  dealerAccount   DealerAccount @relation(fields: [dealerAccountId], references: [id])
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  status          CartSessionStatus @default(active)
+  items           CartItem[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([dealerAccountId, userId, status])
+  @@index([updatedAt])
+}
+
+model CartItem {
+  id            String       @id @default(cuid())
+  cartSessionId String
+  cartSession   CartSession  @relation(fields: [cartSessionId], references: [id])
+  productId     String
+  product       ProductCache @relation(fields: [productId], references: [id])
+  quantity      Int
+  quotedUnitPriceCents Int?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@unique([cartSessionId, productId])
+}
+
+model OrderRequest {
+  id              String              @id @default(cuid())
+  dealerAccountId String
+  dealerAccount   DealerAccount       @relation(fields: [dealerAccountId], references: [id])
+  userId          String
+  user            User                @relation(fields: [userId], references: [id])
+  status          OrderRequestStatus  @default(draft)
+  notes           String?
+  odooReferenceId String?
+  subtotalCents   Int                 @default(0)
+  items           OrderRequestItem[]
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@index([dealerAccountId, status])
+  @@index([userId, createdAt])
+  @@index([odooReferenceId])
+}
+
+model OrderRequestItem {
+  id               String       @id @default(cuid())
+  orderRequestId   String
+  orderRequest     OrderRequest @relation(fields: [orderRequestId], references: [id])
+  productId        String
+  product          ProductCache @relation(fields: [productId], references: [id])
+  sku              String
+  name             String
+  quantity         Int
+  unitPriceCents   Int
+  inventorySummary Json?
+  createdAt        DateTime     @default(now())
+}
+
+model OdooConnection {
+  id          String   @id @default(cuid())
+  name        String
+  baseUrl     String
+  database    String
+  username    String
+  isActive    Boolean  @default(true)
+  lastSuccessAt DateTime?
+  lastFailureAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SyncJob {
+  id          String        @id @default(cuid())
+  jobType     String
+  status      SyncJobStatus @default(queued)
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  message     String?
+  recordsRead Int           @default(0)
+  recordsWritten Int        @default(0)
+  error        String?
+  createdAt    DateTime     @default(now())
+
+  @@index([jobType, status, createdAt])
+}
+
+model ApiAuditLog {
+  id              String         @id @default(cuid())
+  actorType       AuditActorType
+  userId          String?
+  user            User?          @relation("AuditUser", fields: [userId], references: [id])
+  dealerAccountId String?
+  dealerAccount   DealerAccount? @relation(fields: [dealerAccountId], references: [id])
+  action          String
+  resourceType    String
+  resourceId      String?
+  ipAddress       String?
+  userAgent       String?
+  metadata        Json?
+  createdAt       DateTime       @default(now())
+
+  @@index([dealerAccountId, action, createdAt])
+  @@index([userId, createdAt])
+  @@index([resourceType, resourceId])
+}

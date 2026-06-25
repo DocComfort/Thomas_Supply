@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Our team placeholder">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#13315c"/>
+      <stop offset="1" stop-color="#1b6ca8"/>
+    </linearGradient>
+    <pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2" fill="#ffffff" fill-opacity="0.06"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <rect width="1600" height="900" fill="url(#dots)"/>
+  <g fill="none" stroke="#f4a300" stroke-width="9" stroke-linecap="round" opacity="0.9" transform="translate(800,360)">
+    <line x1="0" y1="-70" x2="0" y2="70"/>
+    <line x1="-70" y1="0" x2="70" y2="0"/>
+    <line x1="-50" y1="-50" x2="50" y2="50"/>
+    <line x1="50" y1="-50" x2="-50" y2="50"/>
+  </g>
+  <text x="800" y="540" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="58" font-weight="800" fill="#ffffff">Our team</text>
+  <text x="800" y="600" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="600" fill="#aec3da">Placeholder — replace with a real photo in /public/photos</text>
+</svg>
