@@ -10,7 +10,22 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div>
-            <img src="/logo-white.svg" alt="Thomas Supply" height={42} style={{ marginBottom: 14 }} />
+            <span
+              style={{
+                display: "inline-block",
+                background: "#fff",
+                padding: "8px 12px",
+                borderRadius: 10,
+                marginBottom: 14,
+              }}
+            >
+              <img
+                src="/logo.png"
+                alt="Thomas Supply — Cooling, Heating, Refrigeration"
+                height={40}
+                style={{ display: "block" }}
+              />
+            </span>
             <p style={{ color: "#c7d6e6", maxWidth: "34ch" }}>
               Your local source for HVAC parts and equipment across South
               Louisiana and Southeast Texas since 1979.

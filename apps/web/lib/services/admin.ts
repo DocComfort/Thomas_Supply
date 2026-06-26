@@ -1,14 +1,19 @@
 import { mockDb } from "@thomas-supply/db";
 import { requireAdminContext } from "../auth";
+import * as repo from "../repo";
 
 export async function getAdminDashboard() {
   await requireAdminContext("admin:read");
+  const [dealerAccounts, users] = await Promise.all([
+    repo.listDealerAccounts(),
+    repo.listAllUsers(),
+  ]);
   return {
-    dealerAccounts: mockDb.listDealerAccounts(),
-    users: mockDb.users,
+    dealerAccounts,
+    users,
     orders: mockDb.listOrderRequests(),
     syncJobs: mockDb.listSyncJobs(),
-    auditLogs: mockDb.listAuditLogs()
+    auditLogs: mockDb.listAuditLogs(),
   };
 }
 
@@ -17,7 +22,7 @@ export async function getAdminOrderRequests() {
   return mockDb.listOrderRequests().map((order) => ({
     ...order,
     dealerAccount: mockDb.findDealerAccount(order.dealerAccountId),
-    user: mockDb.findUserById(order.userId)
+    user: mockDb.findUserById(order.userId),
   }));
 }
 
@@ -33,12 +38,12 @@ export async function getAdminAuditLogs() {
 
 export async function getAdminDealerAccounts() {
   await requireAdminContext("admin:manage_dealers");
-  return mockDb.listDealerAccounts();
+  return repo.listDealerAccounts();
 }
 
 export async function getAdminDealerUsers() {
   await requireAdminContext("admin:manage_users");
-  return mockDb.listDealerUsers();
+  return repo.listDealerUsers();
 }
 
 export async function getAdminProductCacheStatus() {
