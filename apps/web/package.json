@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.108.2",
     "@thomas-supply/db": "file:../../packages/db",
     "@thomas-supply/odoo": "file:../../packages/odoo",
     "@thomas-supply/shared": "file:../../packages/shared",

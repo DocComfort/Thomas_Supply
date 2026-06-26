@@ -1,6 +1,7 @@
 import { mockDb } from "@thomas-supply/db";
 import { getDealerOrderHistory } from "@thomas-supply/odoo";
 import { requireDealerContext } from "../auth";
+import * as repo from "../repo";
 import { getDealerCart } from "./cart";
 
 export async function getDealerDashboardData() {
@@ -25,7 +26,7 @@ export async function getDealerUsers() {
   const context = await requireDealerContext("dealer:read");
   return {
     ...context,
-    dealerUsers: mockDb.listDealerUsers(context.dealerAccount.id)
+    dealerUsers: await repo.listDealerUsers(context.dealerAccount.id)
   };
 }
 

@@ -1,4 +1,3 @@
-import { APP_NAME } from "@thomas-supply/shared";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,10 +6,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { marketingSiteUrl } from "@/lib/site-links";
-import { loginAction } from "./actions";
+import { setPasswordAction } from "./actions";
 
-export default function LoginPage({
+export const dynamic = "force-dynamic";
+
+export default function SetPasswordPage({
   searchParams,
 }: {
   searchParams?: { error?: string };
@@ -19,50 +19,42 @@ export default function LoginPage({
     <main className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>{APP_NAME}</CardTitle>
+          <CardTitle>Set your password</CardTitle>
           <CardDescription>
-            Sign in to the Thomas Supply dealer portal.
+            Choose a password to finish setting up your Thomas Supply portal
+            login.
           </CardDescription>
         </CardHeader>
-        <a
-          href={marketingSiteUrl}
-          className="mb-4 inline-flex text-sm font-semibold text-primary hover:underline"
-        >
-          Back to Thomas Supply
-        </a>
         {searchParams?.error && (
           <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-800">
             {searchParams.error}
           </div>
         )}
-        <form action={loginAction} className="space-y-4">
+        <form action={setPasswordAction} className="space-y-4">
           <label className="grid gap-2 text-sm font-medium">
-            Email
+            New password
             <Input
-              name="email"
-              type="email"
-              autoComplete="email"
-              placeholder="you@company.com"
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              minLength={8}
               required
             />
           </label>
           <label className="grid gap-2 text-sm font-medium">
-            Password
+            Confirm password
             <Input
-              name="password"
+              name="confirm"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
+              minLength={8}
               required
             />
           </label>
           <Button className="w-full" type="submit">
-            Sign in
+            Save password &amp; sign in
           </Button>
         </form>
-        <p className="mt-5 text-xs text-muted-foreground">
-          New here? Your Thomas Supply administrator will invite you by email
-          with a link to set your password.
-        </p>
       </Card>
     </main>
   );
