@@ -17,8 +17,11 @@ export default function Nav() {
     <header className="site-header">
       <nav className="nav">
         <Link href="/" className="brand" onClick={() => setOpen(false)} aria-label="Thomas Supply home">
-          {/* Swap /logo.svg for your real logo file in /public when ready */}
-          <img src="/logo.svg" alt="Thomas Supply" height={40} />
+          <img
+            src="/logo.png"
+            alt="Thomas Supply — Cooling, Heating, Refrigeration"
+            height={48}
+          />
         </Link>
         <button
           className="nav-toggle"
