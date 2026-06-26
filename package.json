@@ -22,7 +22,8 @@
     "db:generate": "prisma generate --schema packages/db/schema.prisma",
     "db:push": "prisma db push --schema packages/db/schema.prisma",
     "db:seed": "node packages/db/prisma/seed.mjs",
-    "logos": "node scripts/run-logos.js"
+    "logos": "node scripts/run-logos.js",
+    "licenses": "node scripts/generate-licenses.js"
   },
   "devDependencies": {
     "prisma": "^5.22.0"
